@@ -14,170 +14,222 @@
 }
 
 body {
-    font-family: 'Quicksand', sans-serif;
-    background: linear-gradient(135deg, var(--primary-purple), var(--black));
-    color: var(--light-gray);
-    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
     display: flex;
-}
-
-.heading {
-    text-align: center;
-    padding: 2rem 0;
+    min-height: 100vh;
 }
 
 .sidebar {
-    width: 250px;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 2rem 1rem;
+    width: 300px;
+    background-color: #1a0e1a;
+    color: #fff;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
     position: fixed;
     height: 100vh;
     overflow-y: auto;
 }
 
 .logo {
-    font-family: 'Pacifico', cursive;
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
+    font-family: 'Dancing Script', cursive;
+    color: #f0a8ff;
+    font-size: 2.2rem;
+    padding: 20px;
     text-align: center;
+    margin-bottom: 40px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-.logo a {
-    color: var(--primary-pink);
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-links a {
+    color: #fff;
     text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.logo a:hover {
-    color: var(--light-gray);
-}
-
-nav ul {
-    list-style: none;
-}
-
-nav ul li {
-    margin: 1rem 0;
-}
-
-nav ul li a {
-    color: var(--light-gray);
-    text-decoration: none;
-    display: block;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    padding: 15px 30px;
+    font-size: 1rem;
     transition: all 0.3s ease;
 }
 
-nav ul li a:hover,
-nav ul li a.active {
-    background: var(--primary-purple);
-    color: var(--primary-pink);
+.nav-links a:hover, .nav-links a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #f0a8ff;
 }
 
-main {
-    margin-left: 250px;
-    padding: 2rem;
-    width: calc(100% - 250px);
-}
-
-header {
-    margin-bottom: 2rem;
-}
-
-h1 {
-    font-family: 'Pacifico', cursive;
-    color: var(--primary-pink);
-    font-size: 2.5rem;
-    text-align: center;
-}
-
-.home-header {
-    text-align: center;
-    padding: 2rem 0;
-}
-
-.home-header h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-}
-
-.animate-before {
-    transform: translateY(40px);
-    opacity: 0;
-    pointer-events: none;
-  }
-  
-  .animate-after {
-    transform: translateY(-40px);
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .animate-before,
-  .animate-after {
-    transition: all 0.5s ease;
-  }
- 
-  header {
+.content {
+    flex: 1;
+    margin-left: 300px;
+    background-color: #3a1a3a;
+    min-height: 100vh;
+    padding: 50px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding: 15px 28px 15px 24px;
-  }
-  header h3 {
-    color: #37173D;
-    font-size: 5px;
-    font-weight: 700;
-  }
-
-.featured-gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
 }
 
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
+.main-title {
+    font-family: 'Dancing Script', cursive;
+    color: #f0a8ff;
+    font-size: 4rem;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeInDown 1.5s forwards;
 }
 
-.gallery-item {
-    position: relative;
+.subtitle {
+    font-size: 1.8rem;
+    margin-bottom: 50px;
+    opacity: 0;
+    animation: fadeInUp 1.5s forwards 0.5s;
+}
+
+.keywords {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.keyword {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #f0a8ff;
+    opacity: 0;
+}
+
+.keyword:nth-child(1) {
+    animation: fadeInLeft 1.5s forwards 1s;
+}
+
+.keyword:nth-child(2) {
+    animation: fadeInRight 1.5s forwards 1.5s;
+}
+
+.keyword:nth-child(3) {
+    animation: fadeInLeft 1.5s forwards 2s;
+}
+
+.date {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #f0a8ff;
+    margin-top: 30px;
+    opacity: 0;
+    animation: pulse 1.5s forwards 2.5s;
+}
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
     width: 100%;
-    padding-bottom: 66.67%; /* 3:2 aspect ratio */
+    margin-top: 50px;
+}
+
+.photo-item {
+    height: 250px;
     overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
     transition: transform 0.3s ease;
 }
 
-.gallery-item img {
-    position: absolute;
+.photo-item:hover {
+    transform: scale(1.03);
+}
+
+.photo-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
 }
 
-.gallery-item:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+.photo-item:hover img {
+    transform: scale(1.1);
 }
 
-.fade-in {
-    animation: fadeIn 0.5s ease-in;
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 50px 0;
 }
 
-@keyframes fadeIn {
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-image {
+    max-width: 80%;
+    max-height: 80vh;
+    margin-bottom: 20px;
+}
+
+.close {
+    color: #fff;
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav-arrows {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 30px;
+}
+
+.nav-arrow {
+    color: #fff;
+    font-size: 50px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.page {
+    display: none;
+    width: 100%;
+}
+
+.page.active {
+    display: block;
+}
+
+/* Animations */
+@keyframes fadeInDown {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(-50px);
     }
     to {
         opacity: 1;
@@ -185,72 +237,50 @@ h1 {
     }
 }
 
-/* Modal styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    padding-top: 50px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-}
-
-.modal-content {
-    margin: auto;
-    display: block;
-    max-width: 90%;
-    max-height: 90vh;
-}
-
-.close {
-    position: absolute;
-    right: 35px;
-    top: 15px;
-    color: #f1f1f1;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    body {
-        flex-direction: column;
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
     }
-
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        padding: 1rem;
-    }
-
-    main {
-        margin-left: 0;
-        width: 100%;
-        padding: 1rem;
-    }
-
-    .gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        padding: 10px;
-    }
-
-    .gallery-item {
-        padding-bottom: 75%; /* 4:3 aspect ratio */
-    }
-
-    .modal-content {
-        max-width: 95%;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-@media (max-width: 480px) {
-    .gallery {
-        grid-template-columns: 1fr;
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
     }
 }

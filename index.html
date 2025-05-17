@@ -3,215 +3,601 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Perfect Story - Wedding Gallery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>A Perfect Story - The Uadias Wedding</title>
     <style>
-        .home-header {
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background-color: #1a0e1a;
+            color: #fff;
+            padding: 30px 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .logo {
+            font-family: 'Dancing Script', cursive;
+            color: #f0a8ff;
+            font-size: 2.2rem;
+            padding: 20px;
             text-align: center;
-            padding: 2rem 0;
+            margin-bottom: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
-
-        .home-header h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
+        
+        .logo:hover {
+            transform: scale(1.05);
         }
-
-        .heading {
-            text-align: center;
-            margin-bottom: 2rem;
+        
+        .nav-links {
+            display: flex;
+            flex-direction: column;
         }
-
-        .heading .text {
-            font-size: 1.5rem;
-            color: var(--light-gray);
-            display: block;
-            margin-bottom: 1rem;
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
-
-        .wrapper {
+        
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #f0a8ff;
+        }
+        
+        .content {
+            flex: 1;
+            margin-left: 300px;
+            background-color: #3a1a3a;
+            min-height: 100vh;
+            padding: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
         }
-
-        .offset h2 {
-            font-family: 'Pacifico', cursive;
-            color: var(--primary-pink);
-            font-size: 2rem;
-            margin: 0;
+        
+        .main-title {
+            font-family: 'Dancing Script', cursive;
+            color: #f0a8ff;
+            font-size: 4rem;
+            margin-bottom: 30px;
             opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.5s ease;
+            animation: fadeInDown 1.5s forwards;
         }
-
-        .offset h2.animate {
-            opacity: 1;
-            transform: translateY(0);
+        
+        .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: fadeInUp 1.5s forwards 0.5s;
         }
-
-        .featured-gallery {
+        
+        .keywords {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .keyword {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #f0a8ff;
+            opacity: 0;
+        }
+        
+        .keyword:nth-child(1) {
+            animation: fadeInLeft 1.5s forwards 1s;
+        }
+        
+        .keyword:nth-child(2) {
+            animation: fadeInRight 1.5s forwards 1.5s;
+        }
+        
+        .keyword:nth-child(3) {
+            animation: fadeInLeft 1.5s forwards 2s;
+        }
+        
+        .date {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #f0a8ff;
+            margin-top: 30px;
+            opacity: 0;
+            animation: pulse 1.5s forwards 2.5s;
+        }
+        
+        .photo-gallery {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            padding: 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+            margin-top: 50px;
         }
-
-        .featured-item {
-            position: relative;
+        
+        .photo-item {
+            height: 250px;
             overflow: hidden;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            aspect-ratio: 3/4;
-            height: 300px;
+            transition: transform 0.3s ease;
         }
-
-        .featured-item img {
+        
+        .photo-item:hover {
+            transform: scale(1.03);
+        }
+        
+        .photo-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 50px 0;
+        }
+        
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-image {
+            max-width: 80%;
+            max-height: 80vh;
+            margin-bottom: 20px;
+        }
+        
+        .close {
+            color: #fff;
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .nav-arrows {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0 30px;
+        }
+        
+        .nav-arrow {
+            color: #fff;
+            font-size: 50px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            outline: none;
+        }
+        
+        .page {
+            display: none;
+            width: 100%;
+        }
+        
+        .page.active {
             display: block;
         }
-
-        .featured-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            .featured-gallery {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.8rem;
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
             }
-
-            .featured-item {
-                height: 250px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
-
-        @media (max-width: 480px) {
-            .featured-gallery {
-                grid-template-columns: 1fr;
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
             }
         }
     </style>
 </head>
-<body class="home-page">
+<body>
     <div class="sidebar">
-        <div class="logo"><a href="index.html">A Perfect Story</a></div>
-        <nav>
-            <ul>
-                <li><a href="bride.html">BRIDE</a></li>
-                <li><a href="groom.html">GROOM</a></li>
-                <li><a href="details.html">DETAILS</a></li>
-                <li><a href="bride-and-groom.html">BRIDE & GROOM</a></li>
-                <li><a href="church.html">CHURCH</a></li>
-                <li><a href="events.html">EVENTS</a></li>
-                <li><a href="order.html">ORDER OF PHOTOGRAPHS</a></li>
-            </ul>
+        <div class="logo" id="logo-link">A Perfect Story</div>
+        <nav class="nav-links">
+            <a href="#" class="nav-link active" data-page="home">HOME</a>
+            <a href="#" class="nav-link" data-page="bride">BRIDE</a>
+            <a href="#" class="nav-link" data-page="groom">GROOM</a>
+            <a href="#" class="nav-link" data-page="details">DETAILS</a>
+            <a href="#" class="nav-link" data-page="bride-groom">BRIDE & GROOM</a>
+            <a href="#" class="nav-link" data-page="church">CHURCH</a>
+            <a href="#" class="nav-link" data-page="events">EVENTS</a>
+            <a href="#" class="nav-link" data-page="pre-wedding">PRE WEDDING</a>
+            <a href="#" class="nav-link" data-page="photographs">ORDER OF PHOTOGRAPHS</a>
         </nav>
     </div>
-
-    <main>
-        <div class="home-header">
-            <h1>A Perfect Story</h1>
-            
-            <div class="heading">
-                <span class="text">The union of the Uadias</span>
     
-                <div class="wrapper">
-                    <div class="offset">
-                        <h2 class="text animate-before">Love</h2>
-                    </div>
-                    <div class="offset">
-                        <h2 class="text animate-before">Family</h2>
-                    </div>
-                    <div class="offset">
-                        <h2 class="text animate-before">Joy</h2>
-                    </div>
-                    <div class="offset">
-                        <h2 class="text animate-before">27th April, 2024</h2>
-                    </div>
+    <div class="content">
+        <div class="page active" id="home">
+            <h1 class="main-title">A Perfect Story</h1>
+            <h2 class="subtitle">The union of the Uadias</h2>
+            <div class="keywords">
+                <div class="keyword">Love</div>
+                <div class="keyword">Family</div>
+                <div class="keyword">Joy</div>
+            </div>
+            <div class="date">27th April, 2024</div>
+            
+            <div class="photo-gallery">
+                <div class="photo-item" data-src="C:\Users\HP\Pictures\Website\Home page\home1.jpg.jpg">
+                    <img src="/api/placeholder/400/320" alt="Wedding photo 1">
+                </div>
+                <div class="photo-item" data-src="C:\Users\HP\Pictures\Website\Home page\home2.jpg.jpg">
+                    <img src="/api/placeholder/400/320" alt="Wedding photo 2">
+                </div>
+                <div class="photo-item" data-src="C:\Users\HP\Pictures\Website\Home page\home3.jpg.jpg">
+                    <img src="/api/placeholder/400/320" alt="Wedding photo 3">
+                </div>
+            </div>
+        </div>
+        
+        <div class="page" id="bride">
+            <h1 class="main-title">The Bride</h1>
+            <div class="photo-gallery">
+                <!-- Add actual image paths -->
+                <div class="photo-item" data-src="path/to/your/images/folder/bride1.jpg">
+                    <img src="/api/placeholder/400/320" alt="Bride photo 1">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/bride2.jpg">
+                    <img src="/api/placeholder/400/320" alt="Bride photo 2">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/bride3.jpg">
+                    <img src="/api/placeholder/400/320" alt="Bride photo 3">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/bride4.jpg">
+                    <img src="/api/placeholder/400/320" alt="Bride photo 4">
                 </div>
             </div>
         </div>
 
-        <div id="featured-gallery" class="featured-gallery gallery">
-            <!-- Photos will be loaded here dynamically -->
+        <div class="page" id="groom">
+            <h1 class="main-title">The Groom</h1>
+            <div class="photo-gallery">
+                <!-- Add actual image paths -->
+                <div class="photo-item" data-src="path/to/your/images/folder/groom1.jpg">
+                    <img src="/api/placeholder/400/320" alt="Groom photo 1">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/groom2.jpg">
+                    <img src="/api/placeholder/400/320" alt="Groom photo 2">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/groom3.jpg">
+                    <img src="/api/placeholder/400/320" alt="Groom photo 3">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/groom4.jpg">
+                    <img src="/api/placeholder/400/320" alt="Groom photo 4">
+                </div>
+            </div>
         </div>
-    </main>
-
-    <div id="imageModal" class="modal">
+        
+        <div class="page" id="details">
+            <h1 class="main-title">Wedding Details</h1>
+            <div class="photo-gallery">
+                <!-- Add actual image paths -->
+                <div class="photo-item" data-src="path/to/your/images/folder/details1.jpg">
+                    <img src="/api/placeholder/400/320" alt="Details photo 1">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/details2.jpg">
+                    <img src="/api/placeholder/400/320" alt="Details photo 2">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/details3.jpg">
+                    <img src="/api/placeholder/400/320" alt="Details photo 3">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/details4.jpg">
+                    <img src="/api/placeholder/400/320" alt="Details photo 4">
+                </div>
+            </div>
+        </div>
+        
+        <div class="page" id="bride-groom">
+            <h1 class="main-title">Bride & Groom</h1>
+            <div class="photo-gallery">
+                <!-- Add actual image paths -->
+                <div class="photo-item" data-src="path/to/your/images/folder/couple1.jpg">
+                    <img src="/api/placeholder/400/320" alt="Couple photo 1">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/couple2.jpg">
+                    <img src="/api/placeholder/400/320" alt="Couple photo 2">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/couple3.jpg">
+                    <img src="/api/placeholder/400/320" alt="Couple photo 3">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/couple4.jpg">
+                    <img src="/api/placeholder/400/320" alt="Couple photo 4">
+                </div>
+            </div>
+        </div>
+        
+        <div class="page" id="church">
+            <h1 class="main-title">Church Ceremony</h1>
+            <div class="photo-gallery">
+                <!-- Add actual image paths -->
+                <div class="photo-item" data-src="path/to/your/images/folder/church1.jpg">
+                    <img src="/api/placeholder/400/320" alt="Church photo 1">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/church2.jpg">
+                    <img src="/api/placeholder/400/320" alt="Church photo 2">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/church3.jpg">
+                    <img src="/api/placeholder/400/320" alt="Church photo 3">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/church4.jpg">
+                    <img src="/api/placeholder/400/320" alt="Church photo 4">
+                </div>
+            </div>
+        </div>
+        
+        <div class="page" id="events">
+            <h1 class="main-title">Wedding Events</h1>
+            <div class="photo-gallery">
+                <!-- Add actual image paths -->
+                <div class="photo-item" data-src="path/to/your/images/folder/event1.jpg">
+                    <img src="/api/placeholder/400/320" alt="Event photo 1">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/event2.jpg">
+                    <img src="/api/placeholder/400/320" alt="Event photo 2">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/event3.jpg">
+                    <img src="/api/placeholder/400/320" alt="Event photo 3">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/event4.jpg">
+                    <img src="/api/placeholder/400/320" alt="Event photo 4">
+                </div>
+            </div>
+        </div>
+        
+        <div class="page" id="pre-wedding">
+            <h1 class="main-title">Pre Wedding</h1>
+            <div class="photo-gallery">
+                <!-- Add actual image paths -->
+                <div class="photo-item" data-src="path/to/your/images/folder/pre-wedding1.jpg">
+                    <img src="/api/placeholder/400/320" alt="Pre-wedding photo 1">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/pre-wedding2.jpg">
+                    <img src="/api/placeholder/400/320" alt="Pre-wedding photo 2">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/pre-wedding3.jpg">
+                    <img src="/api/placeholder/400/320" alt="Pre-wedding photo 3">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/pre-wedding4.jpg">
+                    <img src="/api/placeholder/400/320" alt="Pre-wedding photo 4">
+                </div>
+            </div>
+        </div>
+        
+        <div class="page" id="photographs">
+            <h1 class="main-title">Order of Photographs</h1>
+            <div class="photo-gallery">
+                <!-- Add actual image paths -->
+                <div class="photo-item" data-src="path/to/your/images/folder/order1.jpg">
+                    <img src="/api/placeholder/400/320" alt="Photograph order 1">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/order2.jpg">
+                    <img src="/api/placeholder/400/320" alt="Photograph order 2">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/order3.jpg">
+                    <img src="/api/placeholder/400/320" alt="Photograph order 3">
+                </div>
+                <div class="photo-item" data-src="path/to/your/images/folder/order4.jpg">
+                    <img src="/api/placeholder/400/320" alt="Photograph order 4">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Photo Modal -->
+    <div class="modal" id="photo-modal">
         <span class="close">&times;</span>
-        <img class="modal-content" id="modalImage">
+        <div class="modal-content">
+            <img class="modal-image" id="modal-img" src="" alt="Full size photo">
+        </div>
+        <div class="nav-arrows">
+            <button class="nav-arrow" id="prev-photo">&#10094;</button>
+            <button class="nav-arrow" id="next-photo">&#10095;</button>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animate heading text one after another
-            const animateTexts = document.querySelectorAll('.animate-before');
-            animateTexts.forEach((text, index) => {
-                setTimeout(() => {
-                    text.classList.remove('animate-before');
-                    text.classList.add('animate');
-                }, index * 1000); // 1 second delay between each animation
-            });
-
-            // Gallery code
-            const gallery = document.querySelector('.gallery');
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            const closeBtn = document.querySelector('.close');
-
-            // All image paths
-            const imagePaths = {
-                bride: Array.from({length: 114}, (_, i) => `Images/BRIDE/PerfectStory-${i + 1}.jpg`),
-                groom: Array.from({length: 20}, (_, i) => `Images/GROOM/PerfectStory-${i + 115}.jpg`),
-                details: Array.from({length: 20}, (_, i) => `Images/DETAILS/PerfectStory-${i + 135}.jpg`),
-                brideAndGroom: Array.from({length: 20}, (_, i) => `Images/BRIDE & GROOM/PerfectStory-${i + 155}.jpg`),
-                church: Array.from({length: 20}, (_, i) => `Images/CHURCH/PerfectStory-${i + 175}.jpg`),
-                events: Array.from({length: 20}, (_, i) => `Images/EVENT/PerfectStory-${i + 195}.jpg`)
-            };
-
-            // Combine all images into one array
-            const allImages = [].concat(...Object.values(imagePaths));
-
-            // Shuffle array and take first 20 images
-            const shuffledImages = allImages.sort(() => Math.random() - 0.5).slice(0, 20);
-
-            // Create gallery items
-            shuffledImages.forEach(imagePath => {
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'featured-item fade-in';
+        // Navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
                 
-                const img = document.createElement('img');
-                img.src = imagePath;
-                img.alt = 'Wedding Photo';
+                // Remove active class from all links and pages
+                navLinks.forEach(l => l.classList.remove('active'));
+                pages.forEach(p => p.classList.remove('active'));
                 
-                galleryItem.appendChild(img);
-                gallery.appendChild(galleryItem);
+                // Add active class to clicked link
+                this.classList.add('active');
                 
-                galleryItem.addEventListener('click', () => {
-                    modal.style.display = 'block';
-                    modalImg.src = imagePath;
-                });
-            });
-
-            closeBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
-            });
-
-            window.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                }
+                // Show corresponding page
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
             });
         });
+        
+        // Photo gallery modal
+        const modal = document.getElementById('photo-modal');
+        const modalImg = document.getElementById('modal-img');
+        const closeBtn = document.querySelector('.close');
+        const photoItems = document.querySelectorAll('.photo-item');
+        const prevBtn = document.getElementById('prev-photo');
+        const nextBtn = document.getElementById('next-photo');
+        
+        let currentImageIndex = 0;
+        let currentGalleryItems = [];
+        
+        // Open modal when clicking on a photo
+        photoItems.forEach((item, index) => {
+            item.addEventListener('click', function() {
+                const imgSrc = this.getAttribute('data-src');
+                openModal(imgSrc);
+                
+                // Get all images in the current gallery
+                const currentPage = document.querySelector('.page.active');
+                currentGalleryItems = Array.from(currentPage.querySelectorAll('.photo-item'));
+                currentImageIndex = currentGalleryItems.indexOf(this);
+            });
+        });
+        
+        // Close modal
+        closeBtn.addEventListener('click', closeModal);
+        
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Next and previous buttons
+        prevBtn.addEventListener('click', showPrevImage);
+        nextBtn.addEventListener('click', showNextImage);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (!modal.style.display || modal.style.display === 'none') return;
+            
+            if (e.key === 'Escape') {
+                closeModal();
+            } else if (e.key === 'ArrowLeft') {
+                showPrevImage();
+            } else if (e.key === 'ArrowRight') {
+                showNextImage();
+            }
+        });
+        
+        function openModal(imgSrc) {
+            modal.style.display = 'block';
+            modalImg.src = imgSrc;
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+        
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+        
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + currentGalleryItems.length) % currentGalleryItems.length;
+            const imgSrc = currentGalleryItems[currentImageIndex].getAttribute('data-src');
+            modalImg.src = imgSrc;
+            
+            // Add smooth scrolling effect
+            modalImg.style.opacity = '0';
+            setTimeout(() => {
+                modalImg.style.opacity = '1';
+            }, 100);
+        }
+        
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % currentGalleryItems.length;
+            const imgSrc = currentGalleryItems[currentImageIndex].getAttribute('data-src');
+            modalImg.src = imgSrc;
+            
+            // Add smooth scrolling effect
+            modalImg.style.opacity = '0';
+            setTimeout(() => {
+                modalImg.style.opacity = '1';
+            }, 100);
+        }
     </script>
 </body>
 </html>
